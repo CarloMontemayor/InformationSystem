@@ -1,0 +1,102 @@
+﻿@model IEnumerable<InformationSystem.Data.Entity.CrimeCases>
+@using InformationSystem.Data.Enum
+@using InformationSystem.Services;
+@{
+    ViewData["Title"] = "Index";
+    if (ViewBag.IsAdmin)
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    else if (ViewBag.IsBarangayOfficial)
+        Layout = "~/Views/Shared/_BarangayOfficialLayout.cshtml";
+    else
+        Layout = "~/Views/Shared/_ResidentLayout.cshtml";
+}
+<br />
+<br />
+<div class="header">
+    <div class="row clearfix">
+        <div class="col-md-3">
+            <img src="~/Images/logo black.png" style="margin-left:100px" width="300" height="300" class="img-fluid" />
+        </div>
+        <div class="col-md-6 text-center">
+            <h2>
+                Barangay Information System with Document Request and Health and Crime Geo-Based Reporting <br />
+                Barangay Alfonso Concepcion, Tarlac
+            </h2> <br />
+            <h1>
+                Crime Cases
+            </h1>
+        </div>
+        <div class="col-md-3">
+            <img src="~/Images/logoTarlac.jpg" style="margin-top:25px" width="200" height="200" class="img-fluid" />
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<table class="table crimeCasesTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Crime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTime)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderBy(x => x.Status))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Crime.CrimeName)
+                </td>
+                <td>
+                    @if (item.Status == ReportStatus.Pending)
+                    {
+                        <span>Pending</span>
+                    }
+                    else if (item.Status == ReportStatus.Approve)
+                    {
+                        <span>Verified</span>
+                    }
+                    else if (item.Status == ReportStatus.Rejected)
+                    {
+                        <span>Rejected</span>
+                    }
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateTime)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        $('.crimeCasesTable').DataTable({
+            dom: "<'row'<'col-sm-6 col-md-6'><'col-sm-12 col-md-6'f>>" +
+                "<'row'<'col-sm-12 no-bottom-margin'rt>>" +
+                "<'row'<'col-sm-6 col-md-6'li><' col-sm-12 col-md-6'p>>",
+            responsive: true,
+            lengthChange: true,
+            info: false,
+            pagingType: "simple",
+            autoWidth: false,
+            order: []
+        });
+    });
+</script>

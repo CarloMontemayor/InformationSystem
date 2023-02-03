@@ -1,0 +1,50 @@
+﻿@model IEnumerable<InformationSystem.Data.Dto.EventsMapDto>
+@{
+    ViewData["Title"] = "Event Cases Map";
+    if (ViewBag.IsAdmin)
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    else if(ViewBag.IsBarangayOfficial)
+        Layout = "~/Views/Shared/_BarangayOfficialLayout.cshtml";
+    else
+        Layout = "~/Views/Shared/_ResidentLayout.cshtml";
+}
+<link href="~/css/Map.css" rel="stylesheet" />
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+<h2>Accident Map</h2>
+<br />
+<br />
+<div class="row w-100">
+    <div class="col-md-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-9">
+        <div id="map"></div>
+    </div>
+</div>
+<br />
+<br />
+<div id="map"></div>
+<script src="~/js/AccidentMap/Index.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGLMKYD9_T-Dzko-u_dSgqUPPFM3lje68&callback=initMap&libraries=&v=weekly&channel=2"
+        async></script>
+
+

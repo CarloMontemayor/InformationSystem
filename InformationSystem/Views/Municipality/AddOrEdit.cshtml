@@ -1,0 +1,42 @@
+﻿@model InformationSystem.Data.Entity.Municipality
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@if (Model.MunicipalityId != 0)
+{
+    <h1>Update @Model.MunicipalityName</h1>
+}
+else
+{
+    <h1>Create Municipality</h1>
+}
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="AddOrEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MunicipalityId" />
+            <div class="form-group">
+                <label asp-for="MunicipalityName" class="control-label"></label>
+                <input asp-for="MunicipalityName" class="form-control" />
+                <span asp-validation-for="MunicipalityName" class="text-danger"></span>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <input type="submit" value="Submit" class="btn btn-primary btn-block" />
+                </div>
+                <div class="form-group col-md-6">
+                    <a asp-action="Index" class="btn btn-secondary btn-block"><i class="fa fa-table"></i>Back to List</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

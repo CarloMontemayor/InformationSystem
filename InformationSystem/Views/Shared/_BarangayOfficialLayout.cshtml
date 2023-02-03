@@ -1,0 +1,270 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using InformationSystem.Data.Entity
+@inject SignInManager<WebAppUser> SignInManager
+@inject UserManager<WebAppUser> UserManager
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - InformationSystem</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet" />
+    <link href="~/css/sideBar.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/jquery.datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/css/jquery.dataTables.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="page-wrapper chiller-theme toggled">
+        <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+            <i class="fas fa-bars"></i>
+        </a>
+        <nav id="sidebar" class="sidebar-wrapper">
+            <div class="sidebar-content">
+                <div class="sidebar-brand">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div id="close-sidebar">
+                        <i class="fas fa-times"></i>
+                    </div>
+                </div>
+                <div class="sidebar-header">
+                    <div class="user-pic">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            @if (!string.IsNullOrEmpty(UserManager.GetUserAsync(User).Result.ImagePath))
+                            {
+                                <img class="img-responsive img-rounded" src="~/ProfileImage/@UserManager.GetUserAsync(User).Result.ImagePath"
+                                     alt="User picture">
+                            }
+                            else
+                            {
+                                <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+                                     alt="User picture">
+                            }
+                        }
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">
+                            <a style="color: #FFFFFF" asp-area="Identity" asp-page="/Account/Manage/Index">
+                                <span class="user-name">
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        @UserManager.GetUserAsync(User).Result.Name
+                                    }
+
+                                </span>
+                            </a>
+                        </span>
+                        <span class="user-role">Barangay Official</span>
+                        <span class="user-status">
+                            <i class="fa fa-circle"></i>
+                            <span>Online</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul>
+                        <li class="header-menu">
+                            <span>General</span>
+                        </li>
+                        <li class="sidebar-content">
+                            <a asp-controller="Home" asp-action="Index">
+                                <i class="fa fa-tachometer-alt"></i>
+                                <span>Dashboard</span>
+                                @*<span class="badge badge-pill badge-warning">New</span>*@
+                            </a>
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#" id="pendingCount">
+                                <i class="fa fa-user"></i>
+                                <span>Users</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a asp-controller="User" asp-action="BarangayUser">
+                                            Manage Barangay Users
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="PendingUserBarangay" asp-action="Index" id="pendingCountNumber">
+                                            Manage Pending Users
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="ResidentList" asp-action="Index">
+                                            Manage Resident List
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="fa fa-building"></i>
+                                <span>Announcement</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a asp-controller="BarangayEvents" asp-action="Index">Manage Announcement</a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="EventsMap" asp-action="Index">View Map</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#" id="accidentCount">
+                                <i class="fa fa-car"></i>
+                                <span>Accident</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a asp-controller="AccidentProne" asp-action="Index">Manage Accident</a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="AccidentMap" asp-action="Index">View Map</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="fa fa-heartbeat"></i>
+                                <span>Health Cases</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a asp-controller="Disease" asp-action="Index">Manage Diseases</a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="HealthCases" asp-action="Index">Manage Heatlh Cases</a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="HealthCasesMap" asp-action="Index">View Map</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="fa fa-lock"></i>
+                                <span>Crime Cases</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a asp-controller="Crime" asp-action="Index">Manage Crimes</a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="CrimeCases" asp-action="Index">Manage Crime Cases</a>
+                                    </li>
+                                    <li>
+                                        <a asp-controller="CrimeCasesMap" asp-action="Index">View Map</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="sidebar-content">
+                            <a asp-controller="Complaints" asp-action="BarangayViewComplaintReport" id="complaintCount">
+                                <i class="fa fa-pencil-alt"></i>
+                                <span>Complaints</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-content">
+                            <a asp-controller="Reports" asp-action="BarangayViewReport" id="reportCount">
+                                <i class="fa fa-sticky-note"></i>
+                                <span>Requests Document</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-content">
+                            <a asp-controller="AuditLog" asp-action="Index">
+                                <i class="fa fa-notes-medical"></i>
+                                <span>Audit Logs</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-content">
+                            <a asp-controller="Feedbacks" asp-action="BarangayViewFeedback" id="feedbackCount">
+                                <i class="fa fa-smile"></i>
+                                <span>Feedbacks</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="fa fa-chart-line"></i>
+                                <span>Settings</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a asp-area="Identity" asp-page="/Account/Manage/Index">View Account</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="Identity" asp-page="/Account/Manage/Email">Change Email</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword">Change Password</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="sidebar-content">
+                            <form id="myHiddenFormId" asp-area="Identity" asp-page="/Account/Logout" method="post" style="display: none">
+                                <input type="hidden" name="myParameterName" value="myParameterValue">
+                            </form>
+                            <a href="#" onclick="$('#myHiddenFormId').submit(); return false;">
+                                <i class="fa fa-power-off"></i>Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- sidebar-menu  -->
+            </div>
+            <!-- sidebar-content  -->
+            <!--<div class="sidebar-footer">-->
+                @*<a asp-area="Identity" asp-page="/Account/Manage/Index" data-toggle="tooltip" title="Settings">
+                    <i class="fa fa-cog"></i>
+                </a>
+                <hr>*@
+                <!--<form id="myHiddenFormId" asp-area="Identity" asp-page="/Account/Logout" method="post" style="display: none">
+                    <input type="hidden" name="myParameterName" value="myParameterValue">
+                </form>
+                <a href="" onclick="$('#myHiddenFormId').submit(); return false;" data-toggle="tooltip" title="Logout">
+                    <i class="fa fa-power-off"></i>
+                </a>
+            </div>-->
+        </nav>
+        <!-- page-wrapper -->
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/js/bootstrap.js"></script>
+        <script src="~/js/popper.js"></script>
+        <script src="~/js/sideBar.js"></script>
+        <script src="~/js/jquery.datetimepicker.full.min.js"></script>
+        <script src="~/js/jquery.dataTables.min.js"></script>
+        <script src="~/js/Home/_BarangayOfficialLayout.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+        <!-- sidebar-wrapper  -->
+        <main class="page-content">
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+
+        </main>
+        <!-- page-content" -->
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

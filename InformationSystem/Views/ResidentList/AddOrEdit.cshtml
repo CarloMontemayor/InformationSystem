@@ -1,0 +1,80 @@
+﻿@model InformationSystem.Data.Entity.ResidentList
+
+@{
+    ViewData["Title"] = "Index";
+    if (ViewBag.IsAdmin)
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    else if (ViewBag.IsBarangayOfficial)
+        Layout = "~/Views/Shared/_BarangayOfficialLayout.cshtml";
+    else
+        Layout = "~/Views/Shared/_ResidentLayout.cshtml";
+}
+
+@if (Model.ResidentListId != 0)
+{
+    <h1>Update @Model.Name</h1>
+}
+else
+{
+    <h1>Create Resident</h1>
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddOrEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ResidentListId" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            @if (ViewBag.IsAdmin)
+            { 
+        <div class="form-group">
+            <label asp-for="BarangayId"></label>
+            <select asp-for="BarangayId" class="form-control" asp-items="@ViewBag.Barangay">
+                <option selected="selected" value="">--Please select--</option>
+            </select>
+            <span asp-validation-for="BarangayId" class="text-danger"></span>
+        </div>
+            }
+            <div class="form-group">
+                <label asp-for="BarangayNumber" class="control-label"></label>
+                <input asp-for="BarangayNumber" class="form-control" />
+                <span asp-validation-for="BarangayNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Dates" class="control-label"></label>
+                <input asp-for="Dates" class="form-control" />
+                <span asp-validation-for="Dates" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@*<script>
+        $(document).ready(function () {
+            $.datetimepicker.setLocale('en');
+            $('#When').datetimepicker({
+                timepicker: false,
+                format: 'm/d/Y'
+            });
+        });
+    </script>*@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

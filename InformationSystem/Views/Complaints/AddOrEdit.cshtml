@@ -1,0 +1,203 @@
+﻿@model InformationSystem.Data.Dto.ComplaintDto
+@using InformationSystem.Data.Enum
+@{
+    ViewData["Title"] = "Create";
+    if (ViewBag.IsAdmin)
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    else if (ViewBag.IsBarangayOfficial)
+        Layout = "~/Views/Shared/_BarangayOfficialLayout.cshtml";
+    else
+        Layout = "~/Views/Shared/_ResidentLayout.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Complaint</h4>
+<hr />
+<form asp-action="AddOrEdit" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ComplaintId" />
+            <input type="hidden" asp-for="UserId" />
+            <input type="hidden" asp-for="BarangayId" />
+            <div class="form-group">
+                <label class="control-label">@ViewBag.Name</label>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintType" class="control-label"></label>
+                <select asp-for="ComplaintType" class="form-control" asp-items="Html.GetEnumSelectList<ComplaintType>()">
+                    <option selected="selected" value="">Please select</option>
+                </select>
+                <span asp-validation-for="ComplaintType" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="divDisease">
+                <label asp-for="DiseaseId" class="control-label"></label>
+                <select asp-for="DiseaseId" class="form-control" asp-items="@ViewBag.Disease">
+                    <option selected="selected" value="">--Please select--</option>
+                </select>
+                <span asp-validation-for="DiseaseId" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="divCrime" hidden>
+                <label asp-for="CrimeId" class="control-label"></label>
+                <select asp-for="CrimeId" class="form-control" asp-items="@ViewBag.Crimes">
+                    <option selected="selected" value="">--Please select--</option>
+                </select>
+                <span asp-validation-for="CrimeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Victim" class="control-label" id="Victim"></label>
+                <select asp-for="Victim" class="form-control" asp-items="@ViewBag.Victim">
+                    <option selected="selected" value="">--Please select--</option>
+                </select>
+                <span asp-validation-for="Victim" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Respondents" class="control-label"></label>
+                <input asp-for="Respondents" class="form-control" />
+                <span asp-validation-for="Respondents" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <br /><br />
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                @if (Model.Date == DateTime.MinValue)
+                {
+                    <input id="Date" name="Date" class="form-control" value="@ViewBag.Now" />
+                }
+                else
+                {
+                    <input id="Date" name="Date" class="form-control" value="@Model.Date.ToString("MM/dd/yyyy")" />
+                }
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TimeOfIncidents" class="control-label"></label>
+                <input asp-for="TimeOfIncidents" class="form-control" />
+                <span asp-validation-for="TimeOfIncidents" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IncidentLocation" class="control-label"></label>
+                <input asp-for="IncidentLocation" id="IncidentLocation" class="form-control" />
+                <span asp-validation-for="IncidentLocation" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    Please click <a href="https://maps.google.com/" target="_blank" class="form-group" style="margin-top:20px">here</a> to view google map.
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="LatitudeLongitude"></label>
+                    <input asp-for="LatitudeLongitude" id="Latitude" class="form-control" />
+                    <span asp-validation-for="LatitudeLongitude" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateReported" class="control-label"></label>
+                @if (Model.DateReported == DateTime.MinValue)
+                {
+                    <input id="DateReported" name="DateReported" class="form-control" value="@ViewBag.Now" />
+                }
+                else
+                {
+                    <input id="DateReported" name="DateReported" class="form-control" value="@Model.DateReported.ToString("MM/dd/yyyy")" />
+                }
+                <span asp-validation-for="DateReported" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <br />
+                <label asp-for="ImagePath" class="control-label"></label>*
+                <input asp-for="ImagePath" id="customFile" onchange="Filevalidation()" required>
+                @if (Model.ComplaintId != 0)
+                {
+                    <div style="text-align:left;">
+                        <img src="~/img/@Model.ImagePathString" width="150" height="150">
+                    </div>
+                }
+                <span asp-validation-for="ImagePath" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="Detals" class="control-label"></label>
+                <input asp-for="Detals" class="form-control" />
+                <span asp-validation-for="Detals" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGLMKYD9_T-Dzko-u_dSgqUPPFM3lje68&callback=initMap&libraries=&v=weekly&channel=2"
+        async></script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+
+        function Filevalidation() {
+            const input = document.getElementById('customFile');
+            var sizeInKB = input.files[0].size / 1024; //Normally files are in bytes but for KB divide by 1024 and so on
+            var sizeLimit = 10000;
+
+            if (sizeInKB >= sizeLimit) {
+                alert("Max file size 10MB");
+                document.getElementById('customFile').value = null;
+                return false;
+            }
+        }
+
+        $(document).ready(function () {
+            $.datetimepicker.setLocale('en');
+            $('#Date').datetimepicker({
+                timepicker: false,
+                format: 'm/d/Y',
+                maxDate: new Date
+            });
+            $.datetimepicker.setLocale('en');
+            $('#DateReported').datetimepicker({
+                timepicker: false,
+                format: 'm/d/Y',
+                maxDate: new Date
+            });
+        });
+
+        $(document).ready(function () {
+            changeDropdown();
+            $("#ComplaintType").on('change', function () {
+                changeDropdown();
+            });
+
+            function changeDropdown() {
+                if ($("#ComplaintType").val() == 0) {
+                    $("#divDisease").attr("hidden", false);
+                    $("#divCrime").attr("hidden", true);
+                    $("#Victim").text("Patient");
+                } else if ($("#ComplaintType").val() == 1) {
+                    $("#divDisease").attr("hidden", true);
+                    $("#divCrime").attr("hidden", false);
+                    $("#Victim").text("Person To Be Reported");
+                }
+            }
+
+        });
+    </script>
+}

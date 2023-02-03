@@ -1,0 +1,107 @@
+﻿@model InformationSystem.Data.Entity.FeedBack
+
+@{
+    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create";
+    if (ViewBag.IsAdmin)
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    else if (ViewBag.IsBarangayOfficial)
+        Layout = "~/Views/Shared/_BarangayOfficialLayout.cshtml";
+    else
+        Layout = "~/Views/Shared/_ResidentLayout.cshtml";
+}
+
+@if (Model.FeedBackId != 0)
+{
+    <h1>Update Feedback</h1>
+}
+else
+{
+    <h1>Create Feedback</h1>
+}
+<hr />
+<link href="~/css/feedback.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="AddOrEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FeedBackId" />
+            <input type="hidden" asp-for="UserId" value="@ViewBag.UserId" />
+            <label asp-for="Rating" class="control-label"></label>
+            <div class="form-group">
+                <label>
+                    <input type="radio" name="Rating" title="Angry" value="1">
+                    <img src="~/Images/angry.png" title="Angry" width="60" height="60" />
+                </label>
+                <label>
+                    <input type="radio" name="Rating" title="Sad" value="2">
+                    <img src="~/Images/sad.png" title="Sad" width="60" height="60" />
+                </label>
+                <label>
+                    <input type="radio" name="Rating" title="Neutral" value="3">
+                    <img src="~/Images/neutral.png" title="Neutral" width="60" height="60" />
+                </label>
+                <label>
+                    <input type="radio" name="Rating" title="Like" value="4">
+                    <img src="~/Images/like.png" title="Like" width="60" height="60" />
+                </label>
+                <label>
+                    <input type="radio" name="Rating" value="5" title="Love" checked="checked">
+                    <img src="~/Images/love.png" title="Love" width="60" height="60" />
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Details" class="control-label"></label><br />
+                <textarea asp-for="Details" rows="5" cols="50"></textarea>
+                <span asp-validation-for="Details" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DetailsSuggestion" class="control-label"></label><br />
+                <textarea asp-for="DetailsSuggestion" rows="5" cols="50"></textarea>
+                <span asp-validation-for="DetailsSuggestion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RatingService" class="control-label"></label>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="check1" name="RatingService" value="1">
+                    <label class="form-check-label" for="check1">Very Satisfied</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="check2" name="RatingService" value="2">
+                    <label class="form-check-label" for="check2">Satisfied</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="check3" name="RatingService" value="3">
+                    <label class="form-check-label" for="check3">Neutral</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="check4" name="RatingService" value="4">
+                    <label class="form-check-label" for="check4">Dissatisfied</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="check5" name="RatingService" value="5">
+                    <label class="form-check-label" for="check5">Very Dissatisfied</label>
+                </div>
+
+                <span asp-validation-for="RatingService" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script>
+    $('input[type="checkbox"]').on('change', function () {
+        $('input[type="checkbox"]').not(this).prop('checked', false);
+    });
+    </script>
+}

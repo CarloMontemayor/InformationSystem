@@ -1,0 +1,112 @@
+﻿@model InformationSystem.Data.Entity.Reports
+@using InformationSystem.Data.Enum
+@{
+    Layout = "~/Views/Shared/_ResidentLayout.cshtml";
+    ViewData["Title"] = "Create";
+}
+
+@if (Model.ReportsId != 0)
+{
+    <h1>Update @Model.ReportType.ToString()</h1>
+}
+else
+{
+    <h1>Request Document</h1>
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddOrEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ReportsId" />
+            <input type="hidden" asp-for="UserId" value="@ViewBag.UserId" />
+            <input type="hidden" asp-for="DateRequested" value="@ViewBag.DateNow" />
+            <div class="form-group">
+                <label asp-for="ReportType" class="control-label"></label>
+                @if (ViewBag.Disabled == true)
+                {
+                    <select asp-for="ReportType" id="ReportType" class="form-control" asp-items='Html.GetEnumSelectList<ReportType>().Where(x => x.Text != "Barangay Clearance")'>
+                        <option selected="selected" value="">Please select</option>
+                    </select>
+                }
+                else
+                { 
+            <select asp-for="ReportType" id="ReportType" class="form-control" asp-items="Html.GetEnumSelectList<ReportType>()">
+                <option selected="selected" value="">Please select</option>
+            </select>
+                }
+                <span asp-validation-for="ReportType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Reason" class="control-label"></label>
+                <input asp-for="Reason" class="form-control" />
+                <span asp-validation-for="Reason" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="MonthlyIncome">
+                <label asp-for="MonthlyIncome" class="control-label"></label>
+                <input asp-for="MonthlyIncome" class="form-control" />
+                <span asp-validation-for="MonthlyIncome" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="businessName">
+                <label asp-for="BusinessName" class="control-label"></label>
+                <input asp-for="BusinessName" class="form-control" />
+                <span asp-validation-for="BusinessName" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="MotherName">
+                <label asp-for="MotherName" class="control-label"></label>
+                <input asp-for="MotherName" class="form-control" />
+                <span asp-validation-for="MotherName" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="FatherName">
+                <label asp-for="FatherName" class="control-label"></label>
+                <input asp-for="FatherName" class="form-control" />
+                <span asp-validation-for="FatherName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+    $(document).ready(function () {
+        onchange();
+        $("#ReportType").change(function () {
+            onchange();
+        });
+
+        function onchange() {
+            if ($("#ReportType").val() == 3) {
+                $("#MotherName").hide();
+                $("#FatherName").hide();
+                $("#businessName").show();
+                $("#MonthlyIncome").hide();
+            } else if ($("#ReportType").val() == 4) {
+                $("#businessName").hide();
+                $("#MotherName").show();
+                $("#FatherName").show();
+                $("#MonthlyIncome").hide();
+            } else if ($("#ReportType").val() == 0) {
+                $("#MonthlyIncome").show();
+                $("#MotherName").hide();
+                $("#FatherName").hide();
+                $("#businessName").hide();
+            } else {
+                $("#businessName").hide();
+                $("#MotherName").hide();
+                $("#FatherName").hide();
+                $("#MonthlyIncome").hide();
+            }
+
+        }
+    });
+</script>

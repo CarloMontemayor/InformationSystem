@@ -1,0 +1,97 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<div class="jumbotron">
+    <div class="row w-100">
+        <div class="col-md-4">
+            <div class="card border-success mx-sm-1 p-4">
+                <div class="card border-success shadow text-success p-4 my-card"><span class="fa fa-street-view" aria-hidden="true"></span></div>
+                <div class="text-success text-center mt-4"><h4># of Companies</h4></div>
+                <div class="text-success text-center mt-2"><h1 id="teenager"></h1></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-danger mx-sm-1 p-4">
+                <div class="card border-danger shadow text-danger p-4 my-card"><span class="fa fa-users" aria-hidden="true"></span></div>
+                <div class="text-danger text-center mt-4"><h4># of Student Loan Program</h4></div>
+                <div class="text-danger text-center mt-2"><h1 id="adult"></h1></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-warning mx-sm-1 p-4">
+                <div class="card border-warning shadow text-warning p-4 my-card"><span class="fa fa-blind" aria-hidden="true"></span></div>
+                <div class="text-warning text-center mt-4"><h4># of 529 Program</h4></div>
+                <div class="text-warning text-center mt-2"><h1 id="senior"></h1></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-warning mx-sm-1 p-4">
+                <div class="card border-warning shadow text-warning p-4 my-card"><span class="fa fa-blind" aria-hidden="true"></span></div>
+                <div class="text-warning text-center mt-4"><h4># of Both STudent Loan and 529 Program</h4></div>
+                <div class="text-warning text-center mt-2"><h1 id="senior"></h1></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-warning mx-sm-1 p-4">
+                <div class="card border-warning shadow text-warning p-4 my-card"><span class="fa fa-blind" aria-hidden="true"></span></div>
+                <div class="text-warning text-center mt-4"><h4># of Tuition Program</h4></div>
+                <div class="text-warning text-center mt-2"><h1 id="senior"></h1></div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<br />
+<div class="card">
+    <div class="card-header text-center">
+        Announcements
+    </div>
+    <table class="card-table table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Where</th>
+                <th scope="col">When</th>
+                <th scope="col">Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Events)
+            {
+                <tr>
+                    <td>@item.EventName</td>
+                    <td>@item.Where</td>
+                    <td>@item.When.ToString("MM/dd/yyyy")</td>
+                    <td>@item.Time</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>*@
+<br />
+<br />
+<div class="row w-100">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2>Health rates</h2>
+            </div>
+            <div class="card-body bg-white">
+                <canvas id="healthChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2>Crime rates</h2>
+            </div>
+            <div class="card-body bg-white">
+                <canvas id="crimeChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<script src="~/js/Chart.min.js"></script>
+<script src="~/js/Home/AdminView.js"></script>

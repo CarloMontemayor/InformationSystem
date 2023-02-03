@@ -1,0 +1,233 @@
+﻿@page
+@model RegisterModel
+@using InformationSystem.Data.Enum
+@{
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    ViewData["Title"] = "Register";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<form asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div>
+                    <h4>Create a new account.</h4>
+                    <hr />
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Input.Name"></label>
+                        <input asp-for="Input.Name" class="form-control" />
+                        <span asp-validation-for="Input.Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Email"></label>
+                        <input asp-for="Input.Email" class="form-control" />
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="Input.Password"></label>
+                            <input asp-for="Input.Password" class="form-control" />
+
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="Input.ConfirmPassword"></label>
+                            <input asp-for="Input.ConfirmPassword" class="form-control" />
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <span asp-validation-for="Input.Password" class="text-danger text-justify"></span>
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger text-justify"></span>
+                    </div>
+                    <div class="form-group">
+                        <label style="color: red;margin-top:-15px">Hint: The password should be at least have upper case, <br />lower case, number and special character.</label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.PhoneNumber"></label>
+                        <input asp-for="Input.PhoneNumber" class="form-control" />
+                        <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div>
+                    <div class="form-group">
+                        <label asp-for="Input.BloodType"></label>
+                        <input asp-for="Input.BloodType" class="form-control" />
+                        <span asp-validation-for="Input.BloodType" class="text-danger"></span>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="Input.DateOfBirth" class="control-label"></label>
+                            <input id="Input_DateOfBirth" name="Input.DateOfBirth" class="form-control" value="@Model.Dates.ToString("MM/dd/yyyy")" />
+                            <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="Input.Age"></label>
+                            <input asp-for="Input.Age" class="form-control" />
+                            <span asp-validation-for="Input.Age" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Gender" class="control-label"></label>
+                        <select asp-for="Input.Gender" class="form-control" asp-items="Html.GetEnumSelectList<Gender>()">
+                            <option selected="selected" value="">Please select</option>
+                        </select>
+                        <span asp-validation-for="Input.Gender" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div>
+                    <div class="form-group">
+                        <label asp-for="Input.ImagePath"></label>
+                        <input asp-for="Input.ImagePath" class="form-control" />
+                        <span asp-validation-for="Input.ImagePath" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.BarangayUserId"></label>
+                        <input asp-for="Input.BarangayUserId" class="form-control" />
+                        <span asp-validation-for="Input.BarangayUserId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Address"></label>
+                        <input asp-for="Input.Address" class="form-control" />
+                        <span asp-validation-for="Input.Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.BarangayId"></label>
+                        <select asp-for="Input.BarangayId" class="form-control" asp-items="@Model.Barangay">
+                            <option selected="selected" value="">--Please select--</option>
+                        </select>
+                        <span asp-validation-for="Input.BarangayId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.ImageBarangayPath"></label>
+                        <input asp-for="Input.ImageBarangayPath" class="form-control" />
+                        <span asp-validation-for="Input.ImageBarangayPath" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.PostalCode"></label>
+                        <input asp-for="Input.PostalCode" class="form-control" />
+                        <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.BirthPlace"></label>
+                        <input asp-for="Input.BirthPlace" class="form-control" />
+                        <span asp-validation-for="Input.BirthPlace" class="text-danger"></span>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label asp-for="Input.CivilStatus" class="control-label"></label>
+                            <select asp-for="Input.CivilStatus" class="form-control" asp-items="Html.GetEnumSelectList<CivilStatus>()">
+                                <option selected="selected" value="">Please select</option>
+                            </select>
+                            <span asp-validation-for="Input.CivilStatus" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label asp-for="Input.JobStatus" class="control-label"></label>
+                            <select asp-for="Input.JobStatus" class="form-control" asp-items="Html.GetEnumSelectList<JobStatus>()">
+                                <option selected="selected" value="">Please select</option>
+                            </select>
+                            <span asp-validation-for="Input.JobStatus" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="row">
+                <div class="form-group form-inline text-left">
+                    @*<label class="control-label text-justify">
+                        By proceeding and registering with this system, I understand that I am signifying my consent to the disclosure, collection and use of my personal
+                        information and the data required udner the Health and Crime Geo-Based Resident Information System and its Impementing Rules and Regulations. My consent effectively constitutes
+                        a waiver of any and all privacy rights pertaining to the disclosure, collection, use of my personal information and data under the specific terms and condition of the WEbsite Privacy
+                        Policy, the Data Privacy Act of 2021 and its implementing Rules and Regulations, and other system rules, regulations and policies matter.
+                    </label>*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 text-center">Data Privacy Act of 2012</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <label class="control-label text-justify">
+                    By proceeding and registering with this system, I understand that I am signifying my consent to the disclosure, collection and use of my personal
+                    information and the data required under the Health and Crime Geo-Based Resident Information System and its Impementing Rules and Regulations. My consent effectively constitutes
+                    a waiver of any and all privacy rights pertaining to the disclosure, collection, use of my personal information and data under the specific terms and condition of the Website Privacy
+                    Policy, the Data Privacy Act of 2012 and its implementing Rules and Regulations, and other system rules, regulations and policies matter.
+                </label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(window).on('load', function () {
+        $('#myModal').modal('show');
+    });
+
+    $(document).ready(function () {
+        $.datetimepicker.setLocale('en');
+        $('#Input_DateOfBirth').datetimepicker({
+            timepicker: false,
+            format: 'm/d/Y'
+        });
+        document.getElementById("Input_Age").readOnly = true;
+        calculate_age();
+    });
+
+    $(document).on('change', '#Input_DateOfBirth', function (e) {
+        calculate_age();
+    })
+
+    function calculate_age() {
+        var birthday = $("#Input_DateOfBirth").val();
+        var a = new Date(birthday);
+        var b = new Date(Date.now());
+
+        var age = 0;
+        var getAge = b.getFullYear() - a.getFullYear();
+
+        if ((a.getMonth() < b.getMonth()) || (a.getMonth() == b.getMonth() && a.getDate() <= b.getDate())) {
+            age = getAge
+        } else {
+            age = getAge - 1;
+        }
+
+        $("#Input_Age").val(age);
+    }
+</script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

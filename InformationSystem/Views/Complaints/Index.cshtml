@@ -1,0 +1,109 @@
+﻿@model IEnumerable<InformationSystem.Data.Entity.Complaint>
+
+@{
+    ViewData["Title"] = "Index";
+    if (ViewBag.IsAdmin)
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    else if (ViewBag.IsBarangayOfficial)
+        Layout = "~/Views/Shared/_BarangayOfficialLayout.cshtml";
+    else
+        Layout = "~/Views/Shared/_ResidentLayout.cshtml";
+}
+
+<div class="header">
+    <h1>Complaint</h1>
+</div>
+<a asp-action="AddOrEdit" class="btn btn-outline-success"><i class="fa fa-plus-square"></i>Create New</a>
+<table class="table complaintTable">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintType)
+            </th>
+            <th>
+                Patient/Person To Be Reported
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Respondents)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeOfIncidents)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IncidentLocation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateReported)
+            </th>
+            <th>
+                Details
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ComplaintType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Victim)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Respondents)
+            </td>
+            <td>
+                @item.Date.ToString("MM/dd/yyyy")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeOfIncidents)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IncidentLocation)
+            </td>
+            <td>
+                @item.DateReported.ToString("MM/dd/yyyy")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Detals)
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.ImagePath))
+                {
+                    <a asp-action="ViewImage" asp-route-id="@item.ComplaintId" data-toggle="tooltip" target="_blank" title="View Image"><i class="fa fa-image fa-lg"></i></a>
+                }
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.ComplaintId" data-toggle="tooltip" title="Delete" class="text-danger ml-1" onclick="return confirm('Are you sure you want to delete this record?')"><i class="fa fa-trash-alt fa-lg"></i></a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        $('.complaintTable').DataTable({
+            dom: "<'row'<'col-sm-6 col-md-6'><'col-sm-12 col-md-6'f>>" +
+                "<'row'<'col-sm-12 no-bottom-margin'rt>>" +
+                "<'row'<'col-sm-6 col-md-6'li><' col-sm-12 col-md-6'p>>",
+            responsive: true,
+            lengthChange: true,
+            info: false,
+            pagingType: "simple",
+            autoWidth: false,
+            columnDefs: [
+                { targets: 1, width: '10%' },
+                { targets: 8, orderable: false }
+            ]
+        });
+    });
+</script>

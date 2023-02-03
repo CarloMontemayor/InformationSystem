@@ -1,0 +1,85 @@
+﻿@model IEnumerable<InformationSystem.Data.Entity.BarangayOfficial>
+@using InformationSystem.Services;
+@{
+    Layout = "~/Views/Shared/_ResidentLayout.cshtml";
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="card">
+    <div class="card-header text-center">
+        Announcements
+    </div>
+    <table class="card-table table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Where</th>
+                <th scope="col">When</th>
+                <th scope="col">Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.Events)
+            {
+                <tr>
+                    <td>@item.EventName</td>
+                    <td>@item.Where</td>
+                    <td>@item.When.ToString("MM/dd/yyyy")</td>
+                    <td>@item.Time</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<br />
+<br />
+<div class="card">
+    <div class="card-header text-center">
+        Barangay Officials
+    </div>
+    <table class="card-table table">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Position</th>
+                <th scope="col">Year Of Service</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.User.Name</td>
+                    <td>@item.Position.GetDisplayName()</td>
+                    <td>@item.YearOfService</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<br />
+<br />
+@*<div class="row w-100">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2>Health rates</h2>
+            </div>
+            <div class="card-body bg-white">
+                <canvas id="healthChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h2>Crime rates</h2>
+            </div>
+            <div class="card-body bg-white">
+                <canvas id="crimeChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/js/Chart.min.js"></script>
+<script src="~/js/Home/BarangayOfficialView.js"></script>*@

@@ -1,0 +1,109 @@
+﻿@model InformationSystem.Data.Dto.AccidentDto
+
+@{
+    ViewData["Title"] = "Accident Prone Area";
+    if (ViewBag.IsAdmin)
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    else if (ViewBag.IsBarangayOfficial)
+        Layout = "~/Views/Shared/_BarangayOfficialLayout.cshtml";
+    else
+        Layout = "~/Views/Shared/_ResidentLayout.cshtml";
+}
+
+@if (Model.AccidentProneId != 0)
+{
+    <h1>Update @Model.Name</h1>
+}
+else
+{
+    <h1>Report Accident</h1>
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddOrEdit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AccidentProneId" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                Please click <a href="https://maps.google.com/" target="_blank" class="form-group" style="margin-top:20px">here</a> to view google map.
+            </div>
+            <div class="form-group">
+                <label asp-for="LatitudeLongitude" class="control-label"></label>
+                <input asp-for="LatitudeLongitude" class="form-control" />
+                <span asp-validation-for="LatitudeLongitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Respondent" class="control-label"></label>
+                <input asp-for="Respondent" class="form-control" />
+                <span asp-validation-for="Respondent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Where" class="control-label"></label>
+                <input asp-for="Where" class="form-control" />
+                <span asp-validation-for="Where" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Time" class="control-label"></label>
+                <input asp-for="Time" class="form-control" />
+                <span asp-validation-for="Time" class="text-danger"></span>
+            </div>
+            <label asp-for="When" class="control-label"></label>
+            @if (Model.When == DateTime.MinValue)
+            {
+                <input id="When" name="When" class="form-control" value="@ViewBag.Now" />
+            }
+            else
+            {
+                <input id="When" name="When" class="form-control" value="@Model.When.ToString("MM/dd/yyyy")" />
+            }
+            <span asp-validation-for="When" class="text-danger"></span>
+            <div class="form-group">
+                <label asp-for="ImagePath" class="control-label"></label>*
+                <input asp-for="ImagePath" id="customFile" required>
+                @if (Model.AccidentProneId != 0)
+                {
+                    <div style="text-align:left;">
+                        <img src="~/img/@Model.ImagePathString" width="150" height="150">
+                    </div>
+                }
+                <span asp-validation-for="ImagePath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+<script>
+
+        $(document).ready(function () {
+            $.datetimepicker.setLocale('en');
+            $('#When').datetimepicker({
+                timepicker: false,
+                format: 'm/d/Y',
+                maxDate: new Date
+            });
+            $.datetimepicker.setLocale('en');
+            $('#DateReported').datetimepicker({
+                timepicker: false,
+                format: 'm/d/Y',
+                maxDate: new Date
+            });
+        });
+
+</script>
